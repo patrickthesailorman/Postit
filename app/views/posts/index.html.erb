@@ -17,7 +17,7 @@
       <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
         <td><%= post.content %></td>
         <td><%= post.votes %></td>
-        <td><%= post.user %></td>
+        <td><%= post.user.username %></td>
         <td><%= link_to 'Show', post %></td>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>

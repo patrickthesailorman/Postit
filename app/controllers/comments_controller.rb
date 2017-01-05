@@ -1,6 +1,14 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_comment, only: [:show, :edit, :update, :destroy, :comment_owner]
+  before_action :authenticate_user!,except:[:index]
+  before_action :comment_owner, only: [:edit, :update, :destroy]
 
+    def comment_owner
+     unless @comment.user_id == current_user.id
+      flash[:notice] = 'Access denied as you are not owner of this Comment'
+      redirect_to posts_path
+     end
+    end
   # GET /comments
   # GET /comments.json
   def index
