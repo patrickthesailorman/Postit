@@ -1,12 +1,16 @@
 Rails.application.routes.draw do
+  devise_for :users
+  root 'pages#home'
+  get 'about' => 'pages#about'
+
   resources :posts do
    resources :comments
   end
   resources :users
 
-  get 'welcome/index'
+
   match ':controller(/:action(/:id))', :via => :get
-  get 'users/index'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'users#index'
+
 end
