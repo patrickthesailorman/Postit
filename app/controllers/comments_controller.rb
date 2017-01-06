@@ -4,8 +4,8 @@ class CommentsController < ApplicationController
   before_action :comment_owner, only: [:edit, :update, :destroy]
 
     def comment_owner
-     unless @comment.username == current_user
-      flash[:notice] = 'Access denied as you are not owner of this Comment!'
+     unless @comment.user_id == current_user.id
+      flash[:notice] = 'Access denied as you are not owner of this Comment'
       redirect_to posts_path
      end
     end
@@ -22,13 +22,14 @@ class CommentsController < ApplicationController
 
   # GET /comments/new
   def new
-    @comment = Comment.new
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.build
   end
 
   # GET /comments/1/edit
   def edit
-    post = Post.find(params[:post_id])
-    @comment = post.comments.find(params[:id])
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.find(params[:id])
   #  @post = Post.find(params[:post_id])
   end
 
@@ -37,29 +38,26 @@ class CommentsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
 
-    @comment = @post.comments.create(comment_params)
-
-    redirect_to post_path(@post)
-  end
-
-=begin
+    @comment = @post.comments.build(comment_params)
+    @comment.user_id = current_user.id
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        format.html { redirect_to [@post,@comment], alert: 'Comment was successfully created!' }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
-=end
+  end
+
 
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+        format.html { redirect_to post_comment_path, alert: 'Comment was successfully updated!' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }

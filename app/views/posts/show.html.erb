@@ -27,7 +27,7 @@
 </p>
 
 
-<%= link_to 'Edit', edit_post_comment_path(comment.id) %>
+<%= link_to 'Edit', edit_post_comment_path(@post, comment.id) %>
 <%= link_to 'Delete', [comment.post, comment],
     :confirm => 'Are you sure?',
     :method => :delete %>
