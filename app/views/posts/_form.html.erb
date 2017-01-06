@@ -12,19 +12,22 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :Title%>
+    <%= f.text_field :title%>
+  </div>
+
+
+  <div class="field">
     <%= f.label :content %>
-    <%= f.text_field :content %>
+    <%= f.text_area :content %>
   </div>
 
-  <div class="field">
-    <%= f.label :votes %>
-    <%= f.number_field :votes %>
-  </div>
+  <#div class="field">
+    <%#= f.label :votes %>
+    <%#= f.number_field :votes %>
+  <#/div>
 
-  <div class="field">
-    <%= f.label :user_id %>
-    <%= f.text_field :user_id %>
-  </div>
+
 
   <div class="actions">
     <%= f.submit %>
