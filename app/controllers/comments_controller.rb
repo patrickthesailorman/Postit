@@ -4,8 +4,8 @@ class CommentsController < ApplicationController
   before_action :comment_owner, only: [:edit, :update, :destroy]
 
     def comment_owner
-     unless @comment.user_id == current_user.id
-      flash[:notice] = 'Access denied as you are not owner of this Comment'
+     unless @comment.username == current_user
+      flash[:notice] = 'Access denied as you are not owner of this Comment!'
       redirect_to posts_path
      end
     end
@@ -27,6 +27,9 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
+    post = Post.find(params[:post_id])
+    @comment = post.comments.find(params[:id])
+  #  @post = Post.find(params[:post_id])
   end
 
   # POST /comments
@@ -68,10 +71,12 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.find(params[:id])
     @comment.destroy
-    respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
-      format.json { head :no_content }
+      respond_to do |format|
+       format.html { redirect_to post_path(@post), notice: 'Comment was successfully destroyed.' }
+        format.json { head :no_content }
     end
   end
 
