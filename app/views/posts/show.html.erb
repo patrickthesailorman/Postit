@@ -16,7 +16,10 @@
 </p>
 
 <% unless current_user.id == @post.user_id  %>
-<button type="button">Vote</button>
+<%= form_for @post, :method => :put, :remote => true do |f| %>
+  <%= f.hidden_field :votes, value: @post.votes %>
+  <%= f.submit 'Vote' %>
+<% end %>
 <% end %>
 
 <p>
