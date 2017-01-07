@@ -5,7 +5,7 @@ class PostsController < ApplicationController
 
   def post_owner
       unless @post.user_id == current_user.id
-       flash[:notice] = 'Access denied as you are not owner of this Post'
+       flash[:notice] = 'Access denied as you are not owner of this Post!!!'
        redirect_to posts_path
       end
   end
@@ -51,11 +51,16 @@ class PostsController < ApplicationController
     end
   end
 
+  def vote
+    @post = Post.find(params[:post][:id])
+    vote = @post.votes + 1
+    @post.update_attribute(:votes=> vote)
+    logger.info "voted"
+  end
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
   def update
-
-
+    @post = Post.find(params[:user_id])
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
@@ -85,6 +90,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:content, :votes, :user_id)
+      params.require(:post).permit(:title, :content, :votes, :user_id)
     end
 end

@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   end
   resources :users
 
+  put 'vote' => 'posts#vote'
+
 
   match ':controller(/:action(/:id))', :via => :get
 
