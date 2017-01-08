@@ -8,10 +8,15 @@ Rails.application.routes.draw do
   end
   resources :users
 
+  resources :posts do
+    member do
+      put 'vote'
+    end
+  end
   put 'vote' => 'posts#vote'
 
 
-  match ':controller(/:action(/:id))', :via => :get
+  #match ':controller(/:action(/:id))', :via => :get
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

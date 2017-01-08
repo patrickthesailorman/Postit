@@ -52,15 +52,17 @@ class PostsController < ApplicationController
   end
 
   def vote
-    @post = Post.find(params[:post][:id])
-    vote = @post.votes + 1
-    @post.update_attribute(:votes=> vote)
+    @post = Post.find(params[:id])
+    @post.upvote_by current_user
+    #vote = @post.votes + 1
+    #@post.update_attribute(:votes=> vote)
     logger.info "voted"
+    redirect_to(posts_path)
   end
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
   def update
-    @post = Post.find(params[:user_id])
+    @post = Post.find(params[:post_id])
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
