@@ -23,6 +23,8 @@ Things you may want to cover:
 
 * ...
 # Postit
+
+
 This is a web based app primarily for freelance work, but anything really.
 A user can create a post that describes services offered or services needed. 
 i.e. "I am a photographer" or "I need a photographer"...
