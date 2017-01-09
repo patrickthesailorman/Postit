@@ -2,7 +2,7 @@
 <br>
 <%= render 'form', comment: @comment %>
 <br>
-<%= link_to 'Show', post_comment_path %>
+<%= link_to 'Show', post_comments_path(@post.id) %>
 <br>
 <br>
 <%= link_to 'Back', post_comments_path %>
